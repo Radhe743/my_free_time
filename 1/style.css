@@ -1,0 +1,52 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+body {
+  background: linear-gradient(45deg, red, blue);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+.canvas-container {
+  position: relative;
+  height: 700px;
+  width: 700px;
+}
+
+.canvas-container canvas {
+  height: 100%;
+  width: 100%;
+  border: 1px dotted white;
+}
+
+.controls {
+  position: absolute;
+  top: 0;
+  z-index: 100;
+  /* inset: 0; */
+}
+.controls.hidden {
+  display: none;
+}
+.controls .point {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: blue;
+  border: 1px solid white;
+  top: 10;
+  left: 0;
+  cursor: nw-resize;
+  border-radius: 50%;
+}
+.controls [data-pos='bl'],
+.controls [data-pos='tr'] {
+  cursor: ne-resize;
+}
