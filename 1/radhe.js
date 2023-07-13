@@ -17,9 +17,9 @@ const centerX = canvas.width / 2
 const centerY = canvas.height / 2
 const ctx = canvas.getContext('2d')
 
-// const IMG_SRC = '/1/assets/radha-krsna.png'
-// const IMG_SRC = '/1/assets/water.jpg'
-const IMG_SRC = '/1/assets/radhey-shyam.jpg'
+const IMG_SRC = '/1/assets/radha-krsna.png'
+// const IMG_SRC = '/1/assets/water_test.jpg'
+// const IMG_SRC = '/1/assets/radhey-shyam.jpg'
 const CONTROLS_PADDING = 10
 
 const imageProps = {
@@ -36,6 +36,7 @@ let recalculateCanvas = false
 const transformInitPos = {
   x: 0,
   y: 0,
+  initialWidth: 0,
 }
 const initialPos = {
   x: 0,
@@ -86,7 +87,6 @@ function update(time) {
 }
 img.onload = () => {
   render()
-  allowRender()
 }
 
 ////////////////////////////////////////
@@ -149,11 +149,13 @@ function handleMouseMove(ev) {
   if (isTransforming && isResizing) {
     const { x: initX, y: initY } = transformInitPos
     const dx = ev.offsetX - initX
-    const dy = ev.offsetY - initY
-    const { width, height } = imageProps
-    const aspectR = width / height
-    const newWidth = width + dx
+    // const dy = ev.offsetY - initY
+    const { height } = imageProps
+    const { initialWidth } = transformInitPos
+    const aspectR = initialWidth / height
+    const newWidth = initialWidth + dx
     const newHeight = newWidth * aspectR
+
     imageProps.width = newWidth
     imageProps.height = newHeight
   }
@@ -191,8 +193,8 @@ function handleMouseUp() {
 function handleControlPointDown(ev) {
   ev.preventDefault()
   transformInitPos.x = ev.offsetX + ev.target.offsetLeft
-
   transformInitPos.y = ev.offsetY + ev.target.offsetTop
+  transformInitPos.initialWidth = imageProps.width
 
   isResizing = true
   allowRender()
@@ -202,7 +204,6 @@ function handleScaleRange(ev) {
   imageProps.scale = ev.target.value
   render()
 }
-
 canvas.addEventListener('mousedown', handleMouseDown)
 canvas.addEventListener('mousemove', handleMouseMove)
 scaleRange.addEventListener('input', handleScaleRange)

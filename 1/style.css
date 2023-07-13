@@ -18,6 +18,7 @@ body {
   position: relative;
   height: 700px;
   width: 700px;
+  overflow: hidden;
 }
 
 .canvas-container canvas {
